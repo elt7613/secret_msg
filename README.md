@@ -1,4 +1,6 @@
 # Secret-Message 
+![PyPI](https://img.shields.io/pypi/v/secret-message?color=blueviolet&label=Web-version%20&logo=appveyor&style=plastic)
+
 [![PyPI](https://img.shields.io/pypi/v/secret-message?color=blue&style=plastic)](https://pypi.org/project/secret-message/)
 
 Create and share Messages in a  **Secret** way.
