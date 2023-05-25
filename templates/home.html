@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Message
+{% endblock %}
+
+{% block body %}
+<style>
+/*== Section ==*/
+section{
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+/*=== Create Message Card ===*/
+.create-msg-card{
+  position: relative;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+}
+
+/* Title */
+.create-msg-card .title {
+  position: relative;
+  margin-bottom: 50px;
+  font-size: 23px;
+  color: #212121;
+}
+
+/* Message Input */
+textarea {
+  display: block;
+  box-sizing: padding-box;
+  overflow: hidden;
+  padding: 10px;
+  width: 250px;
+  height: 100px;
+  font-size: 14px;
+  margin: 50px auto;
+  border-radius: 6px;
+  box-shadow: 0.1px 0.1px 1px rgba(0, 0, 0, 0.3);
+  border: 0;
+}
+textarea:focus {
+  border: none;
+  outline: none;
+}
+
+/* Password Input */
+.input_box {
+  position: relative;
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 15px;
+}
+.input_box input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0 30px;
+  color: #333;
+  transition: all 0.2s ease;
+  border-bottom: 1.5px solid #aaaaaa;
+}
+.input_box input:focus {
+  border-color: #7d2ae8;
+}
+.input_box i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #707070;
+}
+.input_box i.password {
+  left: 0;
+}
+.input_box i.pw_hide {
+  right: 0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/*=== Submit Button ===*/
+@keyframes loading {
+  0% {
+    cy: 10;
+  }
+  25% {
+    cy: 3;
+  }
+  50% {
+    cy: 10;
+  }
+}
+
+canvas {
+  height: 100vh;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #f4f7ff;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  left: 50%;
+ margin-bottom: 20px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 10px;
+  position: relative;
+  transform: translate(-50%, 30%);
+  width: 190px;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+}
+button::before {
+  background: #1f2335;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) inset;
+  content: "";
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  transition: width 0.2s cubic-bezier(0.39, 1.86, 0.64, 1) 0.3s;
+  width: 100%;
+}
+
+button.ready .submitMessage svg {
+  opacity: 1;
+  top: 1px;
+  transition: top 0.4s ease 600ms, opacity 0.3s linear 600ms;
+}
+button.ready .submitMessage .button-text span {
+  top: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--dr) + 600ms);
+}
+
+button.loading::before {
+  transition: width 0.3s ease;
+  width: 80%;
+}
+button.loading .loadingMessage {
+  opacity: 1;
+}
+button.loading .loadingCircle {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: loading;
+  cy: 10;
+}
+
+button.complete .submitMessage svg {
+  top: -30px;
+  transition: none;
+}
+button.complete .submitMessage .button-text span {
+  top: -8px;
+  transition: none;
+}
+button.complete .loadingMessage {
+  top: 80px;
+}
+button.complete .successMessage .button-text span {
+  left: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--d) + 1000ms);
+}
+button.complete .successMessage svg {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s ease-in-out 1.4s;
+}
+
+.button-text span {
+  opacity: 0;
+  position: relative;
+}
+
+.message {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.message svg {
+  display: inline-block;
+  fill: none;
+  margin-right: 5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.submitMessage .button-text span {
+  top: 8px;
+  transition: all 0.2s ease var(--d);
+}
+.submitMessage svg {
+  color: #5c86ff;
+  margin-left: -1px;
+  opacity: 0;
+  position: relative;
+  top: 30px;
+  transition: top 0.4s ease, opacity 0.3s linear;
+  width: 14px;
+}
+
+.loadingMessage {
+  opacity: 0;
+  transition: opacity 0.3s linear 0.3s, top 0.4s cubic-bezier(0.22, 0, 0.41, -0.57);
+}
+.loadingMessage svg {
+  fill: #5c86ff;
+  margin: 0;
+  width: 22px;
+}
+
+.successMessage .button-text span {
+  left: 5px;
+  transition: all 0.2s ease var(--dr);
+}
+.successMessage svg {
+  color: #5cffa1;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.3s ease-in-out;
+  width: 14px;
+}
+
+.loadingCircle:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.loadingCircle:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/*==== GitHub Link ====*/
+.github-link{
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	font-size: 14px;	
+	color: #212121;
+	font-weight: 410;
+}
+
+/*=== History Card ===*/
+.history-card{
+  position: absolute;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  padding: 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
+}
+.history-card .title{
+  position: relative;
+  margin-bottom: 50px;
+  font-size: 20px;
+  color: #212121;
+}
+.history-card .messages{
+  position: relative;
+  background: #eceff1;
+  max-width: 300px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: 10px;
+  color: #424242;
+}
+.messages label{
+  position: relative;
+  font-size: 14px;
+  font-weight: 410;
+  color: #424242;
+}
+.messages .msg{
+  position: relative;
+  font-size: 14px;
+  color: #37474f;
+}
+.messages .pass{
+  position: relative;
+  font-size: 14px;
+  color: #37474f;
+}
+.messages .messagelink {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+  margin-bottom: 3px;
+  color: #607d8b;
+}
+
+ </style>
+
+<!--=== Create Message ===-->
+<section>
+<form method="post"> {% csrf_token %}
+
+<div class="create-msg-card">
+  <!-- Title -->
+  <h2 class="title">
+   <i><span class="iconify" data-icon="eos-icons:secret-outlined"></span></i>
+    Secret Message
+  </h2>
+  
+  <!-- Message Input -->
+  <textarea class='autoExpand' id="message" name="message" rows='3' data-min-rows='3' placeholder='Enter Your Message ' autofocus></textarea>
+  
+  <!-- Password Input -->
+  <div class="input_box">
+   <input type="password" id="password" name="password" placeholder="Create a password" required />
+   <i class="uil uil-lock password"></i>
+   <i class="uil uil-eye-slash pw_hide"></i>
+  </div>
+  
+  <!-- Submit Button -->
+  <button id="button" class="ready" onclick="clickButton();">
+  <div class="message submitMessage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12.2">
+      <polyline stroke="currentColor" points="2,7.1 6.5,11.1 11,7.1 " />
+      <line stroke="currentColor" x1="6.5" y1="1.2" x2="6.5" y2="10.3" />
+    </svg> <span class="button-text">Create</span>
+  </div>
+  <div class="message loadingMessage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
+      <circle class="loadingCircle" cx="2.2" cy="10" r="1.6" />
+      <circle class="loadingCircle" cx="9.5" cy="10" r="1.6" />
+      <circle class="loadingCircle" cx="16.8" cy="10" r="1.6" />
+    </svg>
+  </div>
+  <div class="message successMessage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11">
+      <polyline stroke="currentColor" points="1.4,5.8 5.1,9.5 11.6,2.1 " />
+    </svg> <span class="button-text">Success</span>
+  </div>
+</button> 
+<!-- GitHub Link -->
+{% for github in github %}
+<a class="github-link" href="{{github.link}}" target="_blank">
+  <span class="iconify" data-icon="mdi:github" style="position:relative; font-size: 19px; color:#424242; top: 3px;"></span>
+  GitHub
+</a>
+{% endfor %}
+</div>
+
+<canvas id="canvas"></canvas>
+
+</form>
+</section>
+
+
+<!--=== History ===-->
+<section>
+<div class="history-card">  
+  <!-- Title -->
+  <h3 class="title">
+    <span class="iconify" data-icon="iconamoon:history-duotone"></span>
+    History
+  </h3>
+  
+  <!-- Messages -->
+  {% for history in history %}
+  <div class="messages">
+    <p class="msg">
+      <label>Message: </label>
+      {{history.text_message}}
+    </p>
+    <p class="msg">
+      <label>Password: </label>
+      {{history.password}}
+    </p>
+    <a href="{{history.web_msg_link}}" target="_blank">
+    <input type="text" class="messagelink" value="{{history.web_msg_link}}" id="messagelink" readonly>
+    </a>
+    You can share this link to anyone,whom you want to see this message
+  </div>
+ {% endfor %} 
+</div>
+</section>
+
+{% endblock %}
+
+
+
+
