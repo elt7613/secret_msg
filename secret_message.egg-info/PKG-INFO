@@ -1,3 +1,16 @@
+Metadata-Version: 2.1
+Name: secret-message
+Version: 0.10
+Summary: Create and share a Message Secretly.
+Author: E Lusifa Taehyung
+Author-email: purplebird7613@gmail.com
+Classifier: Programming Language :: Python
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+
 # Secret-Message 
 [![PyPI](https://img.shields.io/pypi/v/secret-message?color=blueviolet&label=Web-version%20&logo=appveyor&style=plastic)](https://secret-msg.onrender.com/)
 
@@ -100,3 +113,5 @@ For getting history of your messages,it takes only 1 parameter:
   ]
 }
 ```
+
+

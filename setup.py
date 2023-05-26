@@ -1,3 +1,6 @@
+import setuptools
+
+description = """
 # Secret-Message 
 [![PyPI](https://img.shields.io/pypi/v/secret-message?color=blueviolet&label=Web-version%20&logo=appveyor&style=plastic)](https://secret-msg.onrender.com/)
 
@@ -100,3 +103,37 @@ For getting history of your messages,it takes only 1 parameter:
   ]
 }
 ```
+
+
+"""          
+
+setuptools.setup(
+
+	name = 'secret_message', 
+
+	version = '0.10',
+
+	author = "E Lusifa Taehyung",
+
+	author_email = "purplebird7613@gmail.com",
+
+	description = "Create and share a Message Secretly.",
+	
+	long_description = description,
+	
+    long_description_content_type = 'text/markdown',
+  
+	
+	packages = setuptools.find_packages(),
+ 
+	classifiers = [
+
+    "Programming Language :: Python",
+
+    "License :: OSI Approved :: MIT License",
+
+    "Operating System :: OS Independent",
+
+    ],
+
+) 
