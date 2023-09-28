@@ -55,6 +55,53 @@ textarea:focus {
   outline: none;
 }
 
+/* Image Input */
+.file-input {
+  display: inline-block;
+  text-align: left;
+  background: #fff;
+  padding: 16px;
+  /*width: 450px;*/
+  position: relative;
+  border-radius: 3px;
+}
+
+.file-input > [type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.file-input > .button {
+  display: inline-block;
+  cursor: pointer;
+  background: #eee;
+  padding: 8px 16px;
+  border-radius: 15px;
+  margin-right: 8px;
+}
+
+.file-input:hover > .button {
+  background: dodgerblue;
+  color: white;
+}
+
+.file-input > .label {
+  color: #333;
+  white-space: nowrap;
+  opacity: 0.3;
+}
+
+.file-input.-chosen > .label {
+  opacity: 1;
+}
+
+
 /* Password Input */
 .input_box {
   position: relative;
@@ -328,7 +375,7 @@ button.complete .successMessage svg {
 
 <!--=== Create Message ===-->
 <section>
-<form method="post"> {% csrf_token %}
+<form method="post" enctype = "multipart/form-data"> {% csrf_token %}
 
 <div class="create-msg-card">
   <!-- Title -->
@@ -338,7 +385,34 @@ button.complete .successMessage svg {
   </h2>
   
   <!-- Message Input -->
-  <textarea class='autoExpand' id="message" name="message" rows='3' data-min-rows='3' placeholder='Enter Your Message ' autofocus></textarea>
+  <textarea class='autoExpand' id="message" name="message" rows='3' data-min-rows='3' placeholder='Enter Your Message ' autofocus required></textarea>
+  
+  <!-- Image Input -->
+  <div class='file-input'>
+    <input type='file' name="image" id="image" accept="image/*">
+    <span class='button'>Choose</span>
+    <span class='label' data-js-label>No image selected</label>
+  </div>
+    <script>
+	var inputs = document.querySelectorAll('.file-input')
+
+	for (var i = 0, len = inputs.length; i < len; i++) {
+ 	 customInput(inputs[i])
+	}
+
+	function customInput(el) {
+ 	 const fileInput = el.querySelector('[type="file"]');
+  	const label = el.querySelector("[data-js-label]");
+
+  	fileInput.onchange = fileInput.onmouseout = function () {
+   	 if (!fileInput.value) return;
+
+    	var value = fileInput.value.replace(/^.*[\\\/]/, "");
+    	el.className += " -chosen";
+    	label.innerText = value;
+ 	 };
+	}
+  </script>
   
   <!-- Password Input -->
   <div class="input_box">

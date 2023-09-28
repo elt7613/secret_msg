@@ -59,14 +59,14 @@ def home(request):
 	#-------- Creating Message -------
 	if request.method == "POST":
 		msg = request.POST.get("message","")
-		try:
-			img = request.FILES["image"]
-		except:
-			img = None
+		img = request.FILES["image"]
 		password = request.POST.get("password","")
+		print(msg,img,password)
 		
-		message.create(user,msg,img,password)
-		
-		return redirect("/")
+		try:
+			message.create(user,msg,img,password)
+		except:
+			message.create(user,msg,None,password)
+		return redirect("home")
 		
 	return render(request,"home.html",context)

@@ -25,15 +25,17 @@ import secret_message
 ```python
 import secret_message as message 
 
-message.create("<USERNAME>","<YOUR_MESSAGE>","<PASSWORD_FOR_THE_MESSAGE>")
+message.create("<USERNAME>","<YOUR_MESSAGE>","<Image_Path(Only Image)>" or None,"<PASSWORD_FOR_THE_MESSAGE>")
 ```
-For creating a message it takes only 3 parameters:
+For creating a message it takes only 4 parameters:
 ```
 1. Username - Just add your name as username(No registration stuff is required.)
 	
-2. Text Message - You can add your message 
+2. Text Message - You can add your message
+
+3. Image - You can add image as a message, just add image path here or just add None if you don't want to add an image
 	
-3. Message Password = Create a password of your choice for the message you are creating 
+4. Message Password = Create a password of your choice for the message you are creating 
 ```
 
 • Output:
@@ -41,6 +43,7 @@ For creating a message it takes only 3 parameters:
 {
   "id": <YOUR_MESSAGE_ID>,
   "text_message": "<YOUR_MESSAGE>",
+  "image": "<YOUR_IMAGE>",
   "password": "<YOUR_MESSAGE_PASSWORD>",
   "web_msg_link": "<YOUR_MESSAGE_LINK_FOR_WEB>",
   "api_msg_link": "<YOUR_MESSAGE_LINK_FOR_API_CALL>"  
@@ -50,6 +53,8 @@ For creating a message it takes only 3 parameters:
 web_message_link - Using this link anyone will be able to access your message from web[Any web browser].
 
 api_msg_link - Using this link anyone will be able to access your message by api call 
+
+image - Can only be seen from web_message_link
 ```
 
 ## Show/Read Message
@@ -70,7 +75,9 @@ For showing or reading someone else's messages,it takes only 3 parameters:
 • Output:
 ```python
 {
-  "text_message" : "<USER'S_MESSAGE>"
+  "text_message" : "<USER'S_MESSAGE>",
+  "image" : "<USER'S_IMAGE>",
+  "web_msg_link" : "<USER'S_MESSAGE_LINK_FFOR_WEB>"
 }
 ```
 
@@ -90,8 +97,9 @@ For getting history of your messages,it takes only 1 parameter:
 {
   "Messages": [
   	{
-  	   "id": <YOUR_MESSAGE_ID>,
+  	   "id": "<YOUR_MESSAGE_ID>",
   	   "text_message": "<YOUR_MESSAGE>",
+  	   "image": "<YOUR_IMAGE>",
   	   "password": "<YOUR_MESSAGE_PASSWORD>",
   	   "web_msg_link": "<YOUR_MESSAGE_LINK_FOR_WEB>",
   	   "api_msg_link": "<YOUR_MESSAGE_LINK_FOR_API_CALL>" 
