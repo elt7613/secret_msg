@@ -8,5 +8,5 @@ packaging==23.1
 requests==2.31.0
 secret-message==1.1
 sqlparse==0.4.4
-urllib3==2.0.5
+urllib3==2.0.6
 whitenoise==6.5.0
