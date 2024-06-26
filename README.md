@@ -7,6 +7,8 @@
 
 Create and share Messages in a  **Secret** way.
 
+This WebApp allows users to create and share various types of messages, including text, images, videos, files, and documents, with the added option to protect them with a password. It offers features of message sharing with a unique link for a message. This WebApp is user-friendly and accessible from any device with an internet connection, making it easy and convenient to use.
+
 ## Install
 ```python
 pip install secret-message
